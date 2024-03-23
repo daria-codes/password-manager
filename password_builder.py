@@ -1,10 +1,29 @@
 from tkinter import *
 from tkinter import messagebox
+import random
 
 window = Tk()
 window.title("Password Manager")
 window.minsize(width=300, height=30)   
 window.config(padx=50, pady=50)
+
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n']
+numbers = ['1','2','3','4','5','6','7','8','9']
+symbols = ['!','$','%','^','&','*','-']
+
+nr_letters = random.randint(6,8)
+nr_numbers = random.randint(3,5)
+nr_symbols = random.randint(2,4)
+
+password_letters = [random.choice(letters) for _ in range(nr_letters)]
+password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+
+password = password_letters + password_numbers + password_symbols
+
+random.shuffle(password)
+def generate_password():
+    print(password)
 
 #save all the data into a text file
 def save():
@@ -48,10 +67,10 @@ email_ent = Entry(width=35)
 email_ent.grid(column=1, row=2, columnspan=2)
 email_ent.insert(0,"dcode@gmail.com")
 #add entry next to password text
-password_ent = Entry(width=21)
+password_ent = Entry()
 password_ent.grid(column=1, row=3)
 #add a generate password button next to password entry
-password_btn = Button(text="Generate Password")
+password_btn = Button(text="Generate Password", command=generate_password)
 password_btn.grid(column=2, row=3)
 #add an add button in the last row
 add_btn = Button(text="Add", width=36, command=save)
