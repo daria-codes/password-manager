@@ -5,11 +5,20 @@ window.title("Password Manager")
 window.minsize(width=300, height=30)   
 window.config(padx=50, pady=50)
 
+#save all the data into a text file
+def save():
+    website = website_ent.get()
+    email = email_ent.get()
+    password = password_ent.get()
+    with open("my_file.txt", "a") as data_file:
+        data_file.write(f"{website} | {email} | {password}\n")
+        website_ent.delete(0, END)
+
 #add logo
-canvas = Canvas( window, width=400, height=300)
+canvas = Canvas( window, width=200, height=200)
 logo = PhotoImage(file="logo.png")
-canvas.create_image(50,85, image=logo)
-canvas.grid(column=0, row=0, columnspan=2)
+canvas.create_image(50,100, image=logo)
+canvas.grid(column=1, row=0, columnspan=2)
 
 
 #add website text
@@ -23,23 +32,27 @@ password_txt = Label(text="Password", width=12)
 password_txt.grid(column=0, row=3)
 
 #add entry next to website text
-website_ent = Entry(width=40)
+website_ent = Entry(width=35)
 website_ent.grid(column=1, row=1, columnspan=2 )
+website_ent.focus()
 #add entry next to email/username text
-username_ent = Entry(width=40)
-username_ent.grid(column=1, row=2, columnspan=2)
+email_ent = Entry(width=35)
+email_ent.grid(column=1, row=2, columnspan=2)
+email_ent.insert(0,"dcode@gmail.com")
 #add entry next to password text
-password_ent = Entry(width=18)
+password_ent = Entry(width=21)
 password_ent.grid(column=1, row=3)
 #add a generate password button next to password entry
 password_btn = Button(text="Generate Password")
 password_btn.grid(column=2, row=3)
 #add an add button in the last row
-add_btn = Button(text="Add", width=38)
+add_btn = Button(text="Add", width=36, command=save)
 add_btn.grid(column=1, row=4, columnspan=2)
 
-
-
+#save all the data into a text file
+def add_btn_clicked():
+    f = open("my_file.txt", "a")
+    f.write({})
 
 
 window.mainloop()
