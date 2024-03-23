@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
-import random
+from random import choice, randint, shuffle
+import pyperclip
 
 window = Tk()
 window.title("Password Manager")
@@ -11,20 +12,19 @@ letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n']
 numbers = ['1','2','3','4','5','6','7','8','9']
 symbols = ['!','$','%','^','&','*','-']
 
-nr_letters = random.randint(6,8)
-nr_numbers = random.randint(3,5)
-nr_symbols = random.randint(2,4)
+password_letters = [choice(letters) for _ in range(randint(6,8))]
+password_numbers = [choice(numbers) for _ in range(randint(3,5))]
+password_symbols = [choice(symbols) for _ in range(randint(2,4))]
 
-password_letters = [random.choice(letters) for _ in range(nr_letters)]
-password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
-password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+password_list = password_letters + password_numbers + password_symbols
 
-password = password_letters + password_numbers + password_symbols
+shuffle(password_list)
 
-random.shuffle(password)
+password = "".join(password_list)
+
 def generate_password():
-    print(password)
-
+    password_ent.insert(0, password)
+    pyperclip.copy(password) #copies the password generated 
 #save all the data into a text file
 def save():
     website = website_ent.get() 
@@ -41,7 +41,7 @@ def save():
                 website_ent.delete(0, END)
                 password_ent.delete(0, END)
   
-#add logo
+#add image
 canvas = Canvas( window, width=200, height=200)
 logo = PhotoImage(file="logo.png")
 canvas.create_image(50,100, image=logo)
