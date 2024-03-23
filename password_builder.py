@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 window = Tk()
 window.title("Password Manager")
@@ -10,10 +11,17 @@ def save():
     website = website_ent.get()
     email = email_ent.get()
     password = password_ent.get()
-    with open("my_file.txt", "a") as data_file:
-        data_file.write(f"{website} | {email} | {password}\n")
-        website_ent.delete(0, END)
-
+    
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty")
+    else:
+        im_sure = messagebox.askokcancel(title="Website", message=f"Email: {email}\n Password: {password}\n Are you sure you want to save this?")
+        if im_sure:
+            with open("my_file.txt", "a") as data_file:
+                data_file.write(f"{website} | {email} | {password}\n")
+                website_ent.delete(0, END)
+                password_ent.delete(0, END)
+  
 #add logo
 canvas = Canvas( window, width=200, height=200)
 logo = PhotoImage(file="logo.png")
