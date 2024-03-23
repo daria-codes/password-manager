@@ -8,7 +8,7 @@ window.config(padx=50, pady=50)
 
 #save all the data into a text file
 def save():
-    website = website_ent.get()
+    website = website_ent.get() 
     email = email_ent.get()
     password = password_ent.get()
     
